@@ -47,7 +47,7 @@ flowchart TD
 
     B1[Missing Value Imputation] --> B
     B2[Scaling and Encoding] --> B
-
+```
 
 ## 3. Problem Statement
 
