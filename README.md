@@ -30,13 +30,32 @@ It uses a logistic regression model to estimate the likelihood of probable ART c
 
 The broader objective is to explore how predictive analytics can support healthcare workers in identifying patients who may benefit from additional follow-up.
 
-## 2. Problem Statement
+## 2. System Workflow
+
+The ART Clinic – Model B application follows a machine learning workflow that transforms patient characteristics into estimated probabilities of probable ART care interruption.
+
+```mermaid
+flowchart TD
+    A[Patient Characteristics] --> B[Data Preprocessing]
+    B --> C[Candidate B Logistic Regression]
+    C --> D[Predicted Probability]
+    D --> E[Human Review and Follow-up Consideration]
+
+    A1[Demographic Variables] --> A
+    A2[Enrollment Variables] --> A
+    A3[ART-related Variables] --> A
+
+    B1[Missing Value Imputation] --> B
+    B2[Scaling and Encoding] --> B
+
+
+## 3. Problem Statement
 
 Maintaining continuity of HIV care is essential for effective ART service delivery. However, identifying patients who may have disengaged from care can be challenging when healthcare facilities rely on routine clinical records.
 
 This project investigates whether machine learning can identify patterns in routinely collected data that may support patient follow-up and continuity of care.
 
-## 3. Project Objectives
+## 4. Project Objectives
 
 - Prepare and integrate routine HIV clinical datasets.
 - Define an operational outcome for probable ART care interruption.
@@ -45,7 +64,7 @@ This project investigates whether machine learning can identify patterns in rout
 - Evaluate the selected model using cross-validation and out-of-fold predictions.
 - Develop a Streamlit prototype demonstrating predictive analytics in HIV service delivery.
 
-## 4. Dataset Description
+## 5. Dataset Description
 
 Two routine clinical datasets were used:
 
@@ -72,7 +91,7 @@ The final analytical cohort consisted of:
 
 **Data privacy:** Original patient-level clinical datasets are not included in this public repository because of confidentiality and data-protection considerations.
 
-## 5. Machine Learning Approach
+## 6. Machine Learning Approach
 
 Several candidate model specifications were investigated. Candidate B was selected as the cautious research prototype.
 
@@ -104,7 +123,7 @@ The modelling pipeline incorporated:
 
 Preprocessing was fitted within training folds to minimise information leakage.
 
-## 6. Model Performance
+## 7. Model Performance
 
 Candidate B was evaluated using out-of-fold predictions.
 
@@ -118,7 +137,44 @@ Candidate B was evaluated using out-of-fold predictions.
 
 These results indicate promising internal predictive discrimination. Further calibration assessment and independent validation are necessary before considering practical clinical use.
 
-## 7. Technology Stack
+## 8. Model Artifacts and Deployment
+
+The trained Candidate B logistic regression pipeline and its associated metadata are stored in the repository's `model/` directory.
+
+### Saved Model Files
+
+| File | Description |
+|---|---|
+| Candidate B `.joblib` file | Serialised machine learning pipeline used by the Streamlit application. |
+| Candidate B metadata `.json` file | Stores accompanying model information and metadata. |
+
+The saved Joblib artifact allows the application to load the previously trained pipeline without retraining the model whenever a user accesses the application.
+
+### Application Deployment
+
+The application is built using Streamlit and deployed through Streamlit Community Cloud.
+
+**Live application:** [ART Clinic – Model B](https://art-clinic-modelb-kpsxb7xdppeymbzebne9ft.streamlit.app/)
+
+The main application entry point is `main.py`, while Python dependencies are specified in `requirements.txt`.
+
+### Local Execution
+
+To run the application locally:
+
+```bash
+git clone https://github.com/bitokbensive/ART-Clinic-Model_B.git
+
+cd ART-Clinic-Model_B
+
+pip install -r requirements.txt
+
+streamlit run main.py
+```
+
+**Note:** The saved model artifact must remain in its expected directory so that the application can locate and load it successfully.
+
+## 9. Technology Stack
 
 - Python 3.11
 - Pandas
@@ -128,22 +184,21 @@ These results indicate promising internal predictive discrimination. Further cal
 - Seaborn
 - Streamlit
 
-## 8. Repository Structure
+## 10. Repository Structure
 
-```text
 ART-Clinic-Model_B/
 │
 ├── model/
-│   └── Model-related files
+│   ├── ART_interruption_logistic_model_candidate_B.joblib
+│   └── ART_interruption_model_candidate_B_metadata.json
 │
 ├── main.py
 ├── requirements.txt
 ├── runtime.txt
 ├── .gitignore
 └── README.md
-```
 
-## 9. Running the Application Locally
+## 11. Running the Application Locally
 
 ### Step 1: Clone the repository
 
@@ -189,7 +244,7 @@ streamlit run main.py
 
 The application should then be accessible through the local URL displayed in your terminal.
 
-## 10. Limitations and Future Improvements
+## 12. Limitations and Future Improvements
 
 The current implementation is a research prototype and has not undergone independent clinical validation.
 
@@ -203,7 +258,7 @@ Future improvements include:
 - Evaluation of usability and potential impact in clinical workflows.
 - Stronger privacy and data governance safeguards.
 
-## 11. Ethical Considerations
+## 13. Ethical Considerations
 
 HIV-related health information is sensitive and must be handled responsibly.
 
@@ -211,11 +266,11 @@ Any future application should prioritise patient confidentiality, secure data st
 
 The model is intended to support research and potential decision-support workflows. It must not replace healthcare professionals or independently determine patient-care decisions.
 
-## 12. Acknowledgements
+## 14. Acknowledgements
 
 I acknowledge Partners for Health and Development in Africa (PHDA), Kariobangi SWOP Site, the ENGAGE Programme, and the mentors, supervisors, healthcare workers, and data management team who supported this project.
 
-## 13. Author
+## 15. Author
 
 **Bensive Bitok**
 
